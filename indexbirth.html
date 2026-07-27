@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise for You! ❤️</title>
+    
+    <!-- Google Fonts for authentic cute/handwritten aesthetics -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Fredoka:wght@600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-maroon: #913b4c;
+            --secondary-pink: #d97d90;
+            --bg-cream: #fcf8f2;
+            --grid-color: #eaddd3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Fredoka', sans-serif;
+            background-color: var(--bg-cream);
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        /* 1. Notebook Grid Pattern Background Layer */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 25px 25px;
+            z-index: 1;
+        }
+
+        /* 2. Abstract Aesthetic Border Blobs (53298.jpg) */
+        .decor-blob-left {
+            position: fixed;
+            left: -100px;
+            top: 10%;
+            width: 220px;
+            height: 70%;
+            background-color: var(--primary-maroon);
+            border-radius: 0 150px 150px 0;
+            opacity: 0.9;
+            z-index: 2;
+        }
+
+        .decor-blob-right {
+            position: fixed;
+            right: -60px;
+            bottom: -40px;
+            width: 250px;
+            height: 300px;
+            background: var(--secondary-pink);
+            border-radius: 150px 0 0 150px;
+            opacity: 0.7;
+            z-index: 2;
+        }
+
+        /* Main Viewport Container */
+        .app-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Universal Page Display Control */
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: cardFadeIn 0.4s ease-out forwards;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Global Typography Formats */
+        h1.chunky-title {
+            font-size: 7.5rem;
+            color: var(--primary-maroon);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p.cursive-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.2rem;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.2;
+        }
+
+        .cute-asset {
+            max-width: 550px;
+            max-height: 350px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            border-radius: 50px;
+        }
+
+        /* Interactive Custom Pill Buttons */
+        .btn-group {
+            display: flex;
+            gap: 150px;
+            margin-top: 10px;
+        }
+
+        .pill-btn {
+            background-color: var(--primary-maroon);
+            color: white;
+            border: 5px solid var(--primary-maroon);
+            padding: 8px 40px;
+            font-size: 2.8rem;
+            font-family: 'Fredoka', sans-serif;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            text-decoration: underline;
+        }
+
+        .pill-btn:hover {
+            transform: scale(1.06);
+            background-color: #732a37;
+        }
+
+        /* Specific Page Rule Adjustments */
+        .bday-subtext {
+            font-size: 1.2rem;
+            color: #444;
+            letter-spacing: 1px;
+            margin: 6px 0;
+            font-weight: bold;
+        }
+
+        .corner-next-btn {
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            background: #b16273;
+            color: white;
+            padding: 10px 32px;
+            font-size: 2.6rem;
+            border-radius: 30px;
+            cursor: pointer;
+            border: none;
+            font-family: 'Dancing Script', cursive;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Envelope Element (53302.jpg) */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .envelope-wrapper:hover { transform: scale(1.04); }
+
+        /* Fancy Letter/Locket View (53303.jpg) */
+        .letter-box {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 440px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            font-family: 'Caveat', cursive;
+            font-size: 3.0rem;
+            color: #333;
+            line-height: 1.3;
+            position: relative;
+        }
+
+        .locket-graphics {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .heart-photo {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            object-fit: cover;
+        }
+
+        /* Polaroid Phase Style Rules (53304.jpg) */
+        .page-seven-bg {
+            background: radial-gradient(circle, #bc5267 0%, #762434 100%) !important;
+        }
+        .polaroid-string {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .polaroid-card {
+            background: white;
+            padding: 10px 10px 25px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        .polaroid-card:nth-child(1) { transform: rotate(-4deg); }
+        .polaroid-card:nth-child(2) { transform: rotate(3deg); }
+        .polaroid-card:nth-child(3) { transform: rotate(-2deg); }
+        
+        .polaroid-card img {
+            width: 335px;
+            height: 345px;
+            object-fit: cover;
+        }
+
+        /* Gift Shaker Logic (53305.jpg) */
+        .shake-element {
+            animation: giftWobble 2.5s infinite;
+            cursor: pointer;
+        }
+        @keyframes giftWobble {
+            0%, 100% { transform: rotate(0); }
+            20% { transform: rotate(-5deg); }
+            40% { transform: rotate(4deg); }
+            60% { transform: rotate(-4deg); }
+            80% { transform: rotate(3deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Shared Background Textures -->
+    <div id="gridOverlay" class="grid-bg"></div>
+    <div id="blobLeft" class="decor-blob-left"></div>
+    <div id="blobRight" class="decor-blob-right"></div>
+
+    <div class="app-container">
+
+        <!-- 1st Page (Reference: 53298.jpg) -->
+        <div id="page1" class="page active">
+            <h1 class="chunky-title">HEY!!</h1>
+            <img class="cute-asset" src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bHVzZXJlYmk0d2F1azFlZ3hkZWpsdHA2Z253MGNrY2tmb2l6ZGl4ayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/10GN73YGycPXQk/giphy.gif" alt="Staring Cat">
+            <p class="cursive-text">I made something for you<br>Do you want to see?</p>
+            <div class="btn-group">
+                <!-- Click YES -> Jumps straight to Page 3 -->
+                <button class="pill-btn" onclick="navigateTo('page3')">Yes</button>
+                <!-- Click NO -> Shows Page 2 Warning -->
+                <button class="pill-btn" onclick="navigateTo('page2')">No</button>
+            </div>
+        </div>
+
+        <!-- 2nd Page (Reference: 53299.jpg) -->
+        <div id="page2" class="page">
+            <img class="cute-asset" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExazdjc3RlZXpzbml6MW8wN2g0cTQwaXp2NDA2czkyN3owa2o0MTZnNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mgn17Ckkx7bpBuY3do/giphy.gif" alt="Angry Cat">
+            <h1 class="chunky-title" style="font-size: 2.8rem; margin: 20px 0;">HOW DARE YOU</h1>
+            <button class="pill-btn" onclick="navigateTo('page1')">Go back</button>
+        </div>
+
+        <!-- 3rd Page (Reference: 53300.jpg) -->
+        <div id="page3" class="page">
+            <img class="cute-asset" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzc3OG1wY3N0eGc3b3dzdXA3aXNoM3M2bjgwY2RxaHdydmp1czZtZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/0WcVHiiNNgzXFfUlg7/giphy.gif" alt="Happy Cat">
+            <p class="cursive-text" style="font-size: 2.8rem;">That's a good Gurlll 💋</p>
+            <button class="pill-btn" onclick="navigateTo('page4')">Click</button>
+        </div>
+
+        <!-- 4th Page (Reference: 53301.jpg) -->
+        <div id="page4" class="page">
+            <img class="cute-asset" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzFrdjhoemU3eWs5cDBwNW93ZDBpcnJ3Z242cWNqcm43eDV3dmh6OCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Im6d35ebkCIiGzonjI/giphy.gif" alt="Birthday Cat">
+            <h1 class="chunky-title" style="font-size: 3.5rem; color:#b16273;">HAPPY BIRTHDAY BHOOMI ❤️</h1>
+            <div style="margin: 20px 0;">
+                <p class="bday-subtext">MAY GOD GIVE YOU EVERYTHING YOU NEED 💕</p>
+                <p class="bday-subtext">STAY CUTE, STAY HAPPY, STAY SAFE FROM CHHIPKALI 💘</p>
+            </div>
+            <button class="corner-next-btn" onclick="navigateTo('page5')">Next</button>
+        </div>
+
+        <!-- 5th Page (Reference: 53302.jpg) -->
+        <div id="page5" class="page">
+            <div class="envelope-wrapper" onclick="navigateTo('page6')">
+                <img class="cute-asset" style="max-width: 280px;" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTUzbGN1bDdkaDRvanQ3cXh4YXVhbmd2YmVxMWxndzVpcWhjcmRrNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WpCaUSZg9e45tAIacr/giphy.gif" alt="Envelope">
+                <p class="cursive-text">Tap here to open</p>
+            </div>
+        </div>
+
+        <!-- 6th Page (Reference: 53303.jpg) -->
+        <div id="page6" class="page">
+            <div class="letter-box">
+                <img style="width:50px; position:absolute; top:-25px; left:-10px; transform:rotate(-15deg);" src="https://media.tenor.com/YV7Nf22Zg_4AAAAi/pop-cat.gif" alt="Pop Cat">
+                <p>"HAPPY BIRTHDAY! So glad to have you around---and thanks for always keeping your sister in check! Hope your day is filled with good vibes, great food, andtons of fun."</p>
+                <div class="locket-graphics">
+                    <img class="heart-photo" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=150" alt="Couple 1">
+                    <img class="heart-photo" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=150" alt="Couple 2">
+                </div>
+            </div>
+            <button class="corner-next-btn" style="font-family:inherit; font-size:2.2rem;" onclick="enterPolaroidStage()">📸 Click here</button>
+        </div>
+
+        <!-- 7th Page (Reference: 53304.jpg) -->
+        <div id="page7" class="page">
+            <div class="polaroid-string">
+                <div class="polaroid-card"><img src="https://i.pinimg.com/736x/3f/ee/cb/3feecb0edab843902f6acef940c6ca80.jpg" alt="Pic 1"></div>
+                <div class="polaroid-card"><img src="https://i.pinimg.com/736x/5c/a4/93/5ca493447202b3dad086351da9892f3b.jpg" alt="Pic 2"></div>
+                <div class="polaroid-card"><img src="https://i.pinimg.com/736x/ad/57/89/ad5789e4cfac1f70fbdbde16efa96571.jpg" alt="Pic 3"></div>
+            </div>
+            <h1 class="chunky-title" style="color: white; font-size: 3rem;">KEEP SLAYIINGG BHOOMI</h1>
+            <p class="cursive-text" style="color: #ffeef2;">BE HAPPY</p>
+            <button class="corner-next-btn" style="background: white; color: var(--primary-maroon);" onclick="exitPolaroidStage()">🎁 Click here</button>
+        </div>
+
+        <!-- 8th Page (Reference: 53305.jpg) -->
+        <div id="page8" class="page">
+            <h1 class="chunky-title" style="font-size: 2.2rem; margin-bottom: 30px;">Here's a surprise for you!!!</h1>
+            <div class="shake-element" onclick="navigateTo('page9')">
+                <img class="cute-asset" style="max-width: 260px;" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXNlMWUydjRodjhpNWxtZTFwbHo3cWJleWQwZzFvenhobW9mcXRrNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/giKdkKxdDWecg524cE/giphy.gif" alt="Gift">
+                <p class="cursive-text" style="font-size: 1.6rem; margin-top: 10px;">👉 Tap here 👈</p>
+            </div>
+            <img class="cute-asset" style="width: 80px; position: absolute; bottom: 20px; right: 40px;" src="https://media.tenor.com/b6b_bXm7E70AAAAi/cat-kitty.gif" alt="Cat Corner Decorative">
+        </div>
+
+        <!-- 9th Page (Reference: 53306.jpg) -->
+        <div id="page9" class="page">
+            <h1 class="chunky-title" style="font-size: 2.4rem; font-family: 'Dancing Script', cursive; text-transform:none;">Here is virtual BLESSINGS for Uuuu</h1>
+            <h2 class="chunky-title" style="font-size: 5.4rem; font-family: 'Dancing Script', cursive; text-transform:none;">BHOOMIII</h2>
+            <img class="cute-asset" style="max-width: 300px; border-radius: 20px;" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjZpZHpoa3lyZHlrZmw0bWd6MzR2ZnpsdWMwcXh4bnJtbmYxZ2JqdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ZfhDspX45sJCoL1cRq/giphy.gif" alt="Teddy Hugs">
+            <img class="cute-asset" style="width: 120px; position: absolute; bottom: 20px; right: 40px;" src="https://cdn-icons-png.flaticon.com/512/4359/4359963.png" alt="Flowers Bouquet">
+        </div>
+
+    </div>
+
+    <!-- Interface State Routing script -->
+    <script>
+        function navigateTo(pageId) {
+            // Hide all active view panels
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            // Activate targeted view component panel
+            const targetedPage = document.getElementById(pageId);
+            if(targetedPage) {
+                targetedPage.classList.add('active');
+            }
+        }
+
+        // Special environmental style shifts for Page 7 Polaroid showcase
+        function enterPolaroidStage() {
+            document.getElementById('gridOverlay').style.display = 'none';
+            document.getElementById('blobLeft').style.display = 'none';
+            document.getElementById('blobRight').style.display = 'none';
+            document.body.classList.add('page-seven-bg');
+            navigateTo('page7');
+        }
+
+        function exitPolaroidStage() {
+            document.getElementById('gridOverlay').style.display = 'block';
+            document.getElementById('blobLeft').style.display = 'block';
+            document.getElementById('blobRight').style.display = 'block';
+            document.body.classList.remove('page-seven-bg');
+            navigateTo('page8');
+        }
+    </script>
+</body>
+</html>
